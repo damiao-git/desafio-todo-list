@@ -33,7 +33,7 @@ class TarefaController extends Controller
                 'status' => '201',
                 'mensagem' => 'Tarefa criada com sucesso!',
                 'dados' => $tarefa
-                , [], JSON_UNESCAPED_UNICODE            ], 201, [], JSON_UNESCAPED_UNICODE);
+            ], 201, [], JSON_UNESCAPED_UNICODE);
         } else {
             return response()->json([
                 'status' => '400',
