@@ -12,9 +12,9 @@ class TarefaController extends Controller
     public function index()
     {
         $tarefas = Tarefa::all();
-        return response()->json([
-            'tarefas' => $tarefas
-        ], 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json(
+            $tarefas
+        , 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     public function create()
