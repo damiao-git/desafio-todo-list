@@ -1,51 +1,45 @@
 <template>
-  <div>
-    <button @click="criarTarefa">criar auto</button>
-    <table>
-      <thead>
-        <td>Titulo</td>
-        <td>Descrição</td>
-        <td>Situação</td>
-        <td></td>
-      </thead>
-      <tbody>
-        <tr v-for="tarefa in tarefas" :key="tarefa.id">
-          <td>{{ tarefa.titulo }}</td>
-          <td>{{ tarefa.descricao }}</td>
-          <td>{{ tarefa.situacao }}</td>
-          <td>
-            <button>Editar</button>
-            <button>Excluir</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div id="app">
+    <h1>Gerenciador de Tarefas</h1>
+    <div class="principal">
+      <CriarTarefa @tarefaAdicionada="buscarTarefas" />
+      <ListarTarefas :tarefas="tarefas" @tarefaExcluida="buscarTarefas" @tarefaAtualizada="buscarTarefas"/>
+    </div>
   </div>
 </template>
 
 <script setup>
+
+import CriarTarefa from './components/CriarTarefa.vue';
+import ListarTarefas from './components/ListarTarefas.vue';
 import axios from 'axios';
-import {ref} from 'vue';
+import { ref } from 'vue';
 
-const tarefas = ref()
 
-axios.get('api/tarefas')
-.then((response) => {
-  tarefas.value = response.data
-  // console.log(response);
-});
-const criarTarefa = () => {
-  axios.post('api/tarefas', {
-    titulo: 'teste2',
-    descricao: 'teste desc2',
-    situacao: 'pendente'
+const tarefas = ref([]);
+
+const buscarTarefas = () => axios.get('http://127.0.0.1:8000/api/tarefas')
+  .then((res) => {
+    tarefas.value = res.data
   })
-  .then((response) => {
-    console.log(response.data);
-  })
-}
+
+  buscarTarefas();
 </script>
 
-<style>
+<style scoped>
+#app {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
 
+h1 {
+  display: flex;
+  justify-self: center;
+}
+
+.principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 </style>
